@@ -11,7 +11,8 @@ type Implementation interface {
 }
 
 type service struct {
-	tgApi *tg.BotAPI
+	tgApi    *tg.BotAPI
+	stopChan chan bool
 }
 
 func NewService(token string) (Implementation, error) {
@@ -23,9 +24,7 @@ func NewService(token string) (Implementation, error) {
 		return nil, err
 	}
 
-	go func() {
-		srv.SendMessage()
-	}()
+	go srv.StartBot()
 
 	return &srv, err
 }

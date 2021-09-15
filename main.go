@@ -14,5 +14,7 @@ func main() {
 	}
 
 	fmt.Println(tgImpl)
+	time.Sleep(5 * time.Second)
+	tgImpl.StopBot()
 	time.Sleep(100 * time.Second)
 }

@@ -6,6 +6,8 @@ import (
 )
 
 func (s *service) StartBot() {
+	s.stopChan = make(chan bool)
+
 	u := tg.NewUpdate(0)
 	updates, err := s.tgApi.GetUpdatesChan(u)
 	if err != nil {
@@ -14,21 +16,19 @@ func (s *service) StartBot() {
 	}
 
 	for update := range updates {
-		msg := tg.NewMessage(update.Message.Chat.ID, "some message")
-		s.tgApi.Send(msg)
+		select {
+		case <-s.stopChan:
+			return
+		default:
+			msg := tg.NewMessage(update.Message.Chat.ID, "some message")
+			fmt.Println(update.Message.Chat.ID)
+			s.tgApi.Send(msg)
+
+		}
+
 	}
 }
 
 func (s *service) StopBot() {
-	u := tg.NewUpdate(0)
-	updates, err := s.tgApi.GetUpdatesChan(u)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	for update := range updates {
-		msg := tg.NewMessage(update.Message.Chat.ID, "some message")
-		s.tgApi.Send(msg)
-	}
+	s.stopChan <- true
 }
