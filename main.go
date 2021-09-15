@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/telegram_bot/internal"
 	"log"
+	"time"
 )
 
 func main() {
@@ -13,5 +14,5 @@ func main() {
 	}
 
 	fmt.Println(tgImpl)
-	tgImpl.SendMessage()
+	time.Sleep(100 * time.Second)
 }

@@ -5,6 +5,8 @@ import (
 )
 
 type Implementation interface {
+	StartBot()
+	StopBot()
 	SendMessage()
 }
 
@@ -20,5 +22,10 @@ func NewService(token string) (Implementation, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	go func() {
+		srv.SendMessage()
+	}()
+
 	return &srv, err
 }
