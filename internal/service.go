@@ -5,14 +5,16 @@ import (
 )
 
 type Implementation interface {
-	StartBot()
-	StopBot()
+	StartBot() (chan []byte, chan error, error)
+	StopBot() error
 	SendMessage()
 }
 
 type service struct {
-	tgApi    *tg.BotAPI
-	stopChan chan bool
+	tgApi          *tg.BotAPI
+	updatesChannel tg.UpdatesChannel
+	stopChan       chan bool
+	alreadyStarted bool
 }
 
 func NewService(token string) (Implementation, error) {
@@ -23,8 +25,6 @@ func NewService(token string) (Implementation, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	go srv.StartBot()
 
 	return &srv, err
 }
