@@ -7,7 +7,7 @@ import (
 type Implementation interface {
 	StartBot() (chan []byte, chan error, error)
 	StopBot() error
-	SendMessage()
+	SendMessage(message string, chatID int64) error
 }
 
 type service struct {
