@@ -1,4 +1,4 @@
-module github.com/telegram_bot
+module github.com/Alan-prog/telegram_bot
 
 go 1.17
 
