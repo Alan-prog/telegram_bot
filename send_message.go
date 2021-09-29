@@ -1,4 +1,4 @@
-package internal
+package telegram_bot
 
 import (
 	"fmt"

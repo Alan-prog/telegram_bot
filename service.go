@@ -1,4 +1,4 @@
-package internal
+package telegram_bot
 
 import (
 	tg "github.com/Syfaro/telegram-bot-api"
