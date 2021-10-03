@@ -7,6 +7,7 @@ import (
 
 func (s *service) SendMessage(message string, chatID int64) error {
 	tgMsg := tg.NewMessage(chatID, message)
+	tgMsg.ParseMode = "html"
 	_, err := s.tgApi.Send(tgMsg)
 	if err != nil {
 		return fmt.Errorf("error while sending message: %v", err)
